@@ -2,7 +2,7 @@ name: Docker Build and Push
 on:
   #to begin you want to launch this job in main and develop
   workflow_run: 
-    workflows: ["Backend Tests and Analysis"]
+    workflows: ["Sonar Analysis"]
     types:
       - completed
     branches: 
