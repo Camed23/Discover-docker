@@ -1,4 +1,4 @@
-name: Backend Tests and Analysis
+name: Backend Tests
 on:
   #to begin you want to launch this job in main and develop
   push:
@@ -28,4 +28,4 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: cd backend-api/demo &&  ./mvnw -B verify sonar:sonar -Dsonar.projectKey=Camed23_Discover-docker -Dsonar.organization=analysiscloud1 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} 
+        run:  cd backend-api/demo && ./mvnw clean verify

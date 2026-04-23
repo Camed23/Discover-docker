@@ -1,0 +1,35 @@
+name: Sonar Analysis
+on:
+  #to begin you want to launch this job in main and develop
+  workflow_run: 
+    workflows: ["Backend Tests"]
+    types:
+      - completed
+    branches: 
+    - main
+    - develop
+
+
+
+jobs:    
+    # define job to analyze code with sonarcloud
+  sonar-analysis:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+     #checkout your github code using actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+     #do the same with another action (actions/setup-java@v4) that enable to setup jdk 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+     #finally build your app with the latest command
+      - name: Build and analyze with SonarCloud
+        run: cd backend-api/demo &&  ./mvnw -B verify sonar:sonar -Dsonar.projectKey=Camed23_Discover-docker -Dsonar.organization=analysiscloud1 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} 
+
