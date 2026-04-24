@@ -52,3 +52,10 @@ jobs:
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-httpd:latest
           push: true
 
+      - name: Build image and push front
+        uses: docker/build-push-action@v6
+        with:
+          context: devops-front
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-front:latest
+          push: true  
+

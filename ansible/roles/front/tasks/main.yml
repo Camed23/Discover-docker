@@ -1,0 +1,12 @@
+---
+# tasks file for roles/front
+- name: Run frontend
+  community.docker.docker_container:
+    name: front
+    image: faridlp/tp-devops-simple-front:latest
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network
+    pull: true
+    recreate: true
