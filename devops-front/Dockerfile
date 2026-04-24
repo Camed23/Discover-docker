@@ -1,16 +1,16 @@
-FROM node:20-alpine AS build
+FROM node:12.16.3-stretch-slim AS build
 
 WORKDIR /opt/front
 
 COPY package.json yarn.lock ./
-RUN npm install
+RUN yarn install --frozen-lockfile
 
 COPY . .
-RUN npm run build
+RUN yarn build
 
-FROM nginx:alpine
+FROM nginx:1.15.7-alpine
 
-COPY --from=build /opt/front/dist /usr/share/nginx/html
+COPY --from=build /opt/front/dist /usr/share/nginx/html/
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
