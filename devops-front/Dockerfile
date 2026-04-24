@@ -2,8 +2,10 @@ FROM node:12.16.3-stretch-slim AS build
 
 WORKDIR /opt/front
 
+RUN yarn config set registry https://registry.npmjs.org/
+
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --registry https://registry.npmjs.org/
 
 COPY . .
 RUN yarn build
