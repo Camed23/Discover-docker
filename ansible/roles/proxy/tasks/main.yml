@@ -1,0 +1,14 @@
+---
+# tasks file for roles/proxy
+- name: Run HTTP reverse proxy
+  community.docker.docker_container:
+    name: httpd
+    image: faridlp/http-server:1.0
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network
+    ports:
+      - "80:80"
+    pull: true
+    recreate: true
