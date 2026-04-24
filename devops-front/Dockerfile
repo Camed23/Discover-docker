@@ -1,16 +1,14 @@
-FROM node:12.16.3-stretch-slim AS build
+FROM node:20-alpine AS build
 
 WORKDIR /opt/front
 
-RUN yarn config set registry https://registry.npmjs.org/
-
 COPY package.json ./
-RUN yarn install --registry https://registry.npmjs.org/
+RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN yarn build
+RUN npm run build
 
-FROM nginx:1.15.7-alpine
+FROM nginx:alpine
 
 COPY --from=build /opt/front/dist /usr/share/nginx/html/
 COPY default.conf /etc/nginx/conf.d/default.conf
