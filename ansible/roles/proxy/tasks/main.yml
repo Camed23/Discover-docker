@@ -3,7 +3,7 @@
 - name: Run HTTP reverse proxy
   community.docker.docker_container:
     name: httpd
-    image: faridlp/http-server:1.0
+    image: faridlp/tp-devops-simple-httpd:latest
     state: started
     restart_policy: always
     networks:
